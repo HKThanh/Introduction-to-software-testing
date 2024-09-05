@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        .wrapper {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        form {
+            width: 30%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #000;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        label {
+            margin-top: 10px;
+            font-size: 1.3rem;
+        }
+        
+        input {
+            margin-top: 5px;
+            padding: 5px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+        }
+        
+        input[type="button"] {
+            margin-top: 10px;
+            padding: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            height: 50px;
+        }
+        
+        #result {
+            background-color: #ebebeb;
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <form action="" method="post">
+            <h1>Calculate Ticket Price</h1>
+            <label for="dof">Day of weeks:</label>
+            <input type="text" name="dof" id="dof" required>
+            <br>
+            <label for="status">Visitor's Status:</label>
+            <input type="text" id="status" name="status" required>
+            <br>
+            <label for="hours">Entry hours:</label>
+            <input type="text" id="hours" name="hours" required>
+            <br>
+            <label for="age">Visitor's Age:</label>
+            <input type="text" id="age" name="age" required>
+            <br>
+            <label for="result">Total Price:</label>
+            <input type="text" id="result" name="result" readonly>
+            <br>
+            <input type="button" value="Calculate">
+        </form>
+    </div>
+
+    <script>
+        let dof = document.getElementById('dof');
+        let status = document.getElementById('status');
+        let hours = document.getElementById('hours');
+        let age = document.getElementById('age');
+        let result = document.getElementById('result');
+        let button = document.querySelector('input[type="button"]');
+
+        let regexDOF = /^(Mon|Tue|Wed|Thurs|Fri|Sat|Sun)$/;
+        dof.blur = () => {
+            if (!regexDOF.test(dof.value)) {
+                alert('Invalid Day of Week');
+                dof.focus();
+            }
+        }
+        let regexStatus = /^(OT|M)$/;
+        status.blur = () => {
+            if (!regexStatus.test(status.value)) {
+                alert('Invalid Visitor Status');
+                status.focus();
+            }
+        }
+
+        button.addEventListener('click', () => {
+            calculate();
+        });
+
+        function calculate() {
+            if (dof.value === 'Mon' || dof.value === 'Tue' || dof.value === 'Wed' || dof.value === 'Thurs' || dof.value === 'Fri') {
+                if (status.valueOf === 'OT') {
+                    if (hours.value >= 6.00 && hours.value <= 19.00) {
+                        if (age.value >= 0.00 && age.value <= 16.00) {
+                            result.value = 5.00;
+                        } else if (age.value <= 60.00) {
+                            result.value = 10.00;
+                        } else if (age.value <= 120.00) {
+                            result.value = 8.00;
+                        }
+                    } else if (hours.value <= 24.00) {
+                        if (age.value >= 0.00 && age.value <= 16.00) {
+                            result.value = 6.00;
+                        } else if (age.value <= 60.00) {
+                            result.value = 12.00;
+                        } else if (age.value <= 120.00) {
+                            result.value = 8.00;
+                        }
+                    }
+                } else {
+                    if (hours.value >= 6.00 && hours.value <= 19.00) {
+                        if (age.value >= 0.00 && age.value <= 16.00) {
+                            result.value = 2.50;
+                        } else if (age.value <= 60.00) {
+                            result.value = 5.00;
+                        } else if (age.value <= 120.00) {
+                            result.value = 4.00;
+                        }
+                    } else if (hours.value <= 24.00) {
+                        if (age.value >= 0.00 && age.value <= 16.00) {
+                            result.value = 3.00;
+                        } else if (age.value <= 60.00) {
+                            result.value = 6.00;
+                        } else if (age.value <= 120.00) {
+                            result.value = 4.00;
+                        }
+                    }
+                }
+            }
+
+            if (dof.value === 'Sat' || dof.value === 'Sun') {
+                if (status.valueOf === 'OT') {
+                    if (hours.value >= 6.00 && hours.value <= 19.00) {
+                        if (age.value >= 0.00 && age.value <= 16.00) {
+                            result.value = 7.00;
+                        } else if (age.value <= 60.00) {
+                            result.value = 15.00;
+                        } else if (age.value <= 120.00) {
+                            result.value = 12.00;
+                        }
+                    } else if (hours.value <= 24.00) {
+                        if (age.value >= 0.00 && age.value <= 16.00) {
+                            result.value = 9.00;
+                        } else if (age.value <= 60.00) {
+                            result.value = 18.00;
+                        } else if (age.value <= 120.00) {
+                            result.value = 12.00;
+                        }
+                    }
+                } else {
+                    if (hours.value >= 6.00 && hours.value <= 19.00) {
+                        if (age.value >= 0.00 && age.value <= 16.00) {
+                            result.value = 3.50;
+                        } else if (age.value <= 60.00) {
+                            result.value = 7.00;
+                        } else if (age.value <= 120.00) {
+                            result.value = 5.50;
+                        }
+                    } else if (hours.value <= 24.00) {
+                        if (age.value >= 0.00 && age.value <= 16.00) {
+                            result.value = 4.00;
+                        } else if (age.value <= 60.00) {
+                            result.value = 8.00;
+                        } else if (age.value <= 120.00) {
+                            result.value = 5.50;
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
